@@ -48,6 +48,9 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.center = (self.x, self.y)
 
+class Ball(pygame.sprite.Sprite):
+        def __init__(self):
+        def __init__(self):
 
 def main():
 
