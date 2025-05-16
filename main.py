@@ -5,6 +5,7 @@
 import pygame
 import sys
 import config  # Import the config module
+import random
 
 def init_game():
     pygame.init()
@@ -20,6 +21,33 @@ def handle_events():
             if event.key == pygame.K_ESCAPE:
                 return False  # Return False to indicate quitting
     return True  # Continue running if no quit event
+
+class Player(pygame.sprite.Sprite):
+    """Represents the player's paddle"""
+
+    def __init__(self, color):
+        super().__init__()
+        self.color = color
+        self.image = pygame.surface((config.PLAYER_WIDTH, config.PLAYER_HEIGHT))
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+
+        # Position (x, y)
+        self.x = config.PLAYER_START_X
+        self.y = config.PLAYER_START_Y
+        self.rect.center = (self.x, self.y)
+
+    def update(self):
+        """Moves the player based on keyboard input"""
+    
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RIGHT] and self.x <= config.WINDOW_WIDTH - config.PLAYER_WIDTH // 2 and self.y > config.WINDOW_HEIGHT - 100:
+            self.x += config.PLAYER_MOVEMENT_SPEED
+        if keys[pygame.K_LEFT] and self.x >= config.PLAYER_WIDTH // 2 and self.y > config.WINDOW_HEIGHT - 100:
+            self.x -= config.PLAYER_MOVEMENT_SPEED
+
+        self.rect.center = (self.x, self.y)
+
 
 def main():
 
